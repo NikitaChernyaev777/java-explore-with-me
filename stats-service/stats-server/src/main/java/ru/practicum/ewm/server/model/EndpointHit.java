@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -22,10 +22,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Table(name = "endpoint_hits")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class EndpointHit {
 
     @Id
-    @Column(nullable = false, updatable = false)
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -40,23 +41,4 @@ public class EndpointHit {
 
     @Column(name = "created", nullable = false)
     private LocalDateTime timestamp;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EndpointHit that = (EndpointHit) o;
-        if (that.id != null && id != null) {
-            return id.equals(that.id);
-        }
-        return Objects.equals(app, that.app) &&
-                Objects.equals(uri, that.uri) &&
-                Objects.equals(ip, that.ip) &&
-                Objects.equals(timestamp, that.timestamp);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? Objects.hash(id) : Objects.hash(app, uri, ip, timestamp);
-    }
 }

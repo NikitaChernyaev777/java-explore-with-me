@@ -1,7 +1,6 @@
 package ru.practicum.ewm.client;
 
 import jakarta.annotation.Nullable;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,37 +20,35 @@ public class BaseClient {
         this.restTemplate = restTemplate;
     }
 
-    protected <T> ResponseEntity<T> get(String path,
-                                        @Nullable Map<String, Object> parameters,
-                                        ParameterizedTypeReference<T> responseType) {
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, null, responseType);
+    protected ResponseEntity<Object> get(@Nullable Map<String, Object> parameters) {
+        return makeAndSendRequest(HttpMethod.GET, "/stats?start={start}&end={end}&uris={uris}&unique={unique}",
+                parameters, null);
     }
 
-    protected <T, R> ResponseEntity<R> post(String path,
-                                            T body,
-                                            ParameterizedTypeReference<R> responseType) {
-        return makeAndSendRequest(HttpMethod.POST, path, null, body, responseType);
+    protected <T> ResponseEntity<Object> post(T body) {
+        return makeAndSendRequest(HttpMethod.POST, "/hit", null, body);
     }
 
-    private <T, R> ResponseEntity<R> makeAndSendRequest(HttpMethod method,
-                                                        String path,
-                                                        @Nullable Map<String, Object> parameters,
-                                                        @Nullable T body,
-                                                        ParameterizedTypeReference<R> responseType) {
+    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method,
+                                                          String path,
+                                                          @Nullable Map<String, Object> parameters,
+                                                          @Nullable T body) {
         HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders());
 
+        ResponseEntity<Object> statsServerResponse;
         try {
             if (parameters != null) {
-                return restTemplate.exchange(path, method, requestEntity, responseType, parameters);
+                statsServerResponse = restTemplate.exchange(path, method, requestEntity, Object.class, parameters);
             } else {
-                return restTemplate.exchange(path, method, requestEntity, responseType);
+                statsServerResponse = restTemplate.exchange(path, method, requestEntity, Object.class);
             }
         } catch (HttpStatusCodeException exception) {
             return ResponseEntity
                     .status(exception.getStatusCode())
-                    .headers(exception.getResponseHeaders())
-                    .body(null);
+                    .body(exception.getResponseBodyAsByteArray());
         }
+
+        return prepareResponse(statsServerResponse);
     }
 
     private HttpHeaders defaultHeaders() {
@@ -59,5 +56,19 @@ public class BaseClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         return headers;
+    }
+
+    private static ResponseEntity<Object> prepareResponse(ResponseEntity<Object> response) {
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response;
+        }
+
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(response.getStatusCode());
+
+        if (response.hasBody()) {
+            return responseBuilder.body(response.getBody());
+        }
+
+        return responseBuilder.build();
     }
 }
