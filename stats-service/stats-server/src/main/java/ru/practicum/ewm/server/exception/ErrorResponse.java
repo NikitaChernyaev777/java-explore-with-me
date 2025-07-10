@@ -1,16 +1,15 @@
 package ru.practicum.ewm.server.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@AllArgsConstructor
 public class ErrorResponse {
-    private final String error;
-    private final String description;
-    private final String path;
-    private final LocalDateTime timestamp;
-    private final int status;
+    private final String status;
+    private final String reason;
+    private final String message;
+    private final String timestamp;
 }
