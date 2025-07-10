@@ -2,7 +2,6 @@ package ru.practicum.ewm.compilation.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,9 +49,9 @@ public class CompilationServiceImpl implements CompilationService {
 
         Pageable pageRequest = entityHelper.toPageRequest(from, size);
 
-        Page<Compilation> page = (pinned != null)
+        List<Compilation> page = (pinned != null)
                 ? compilationRepository.findAllByPinned(pinned, pageRequest)
-                : compilationRepository.findAll(pageRequest);
+                : compilationRepository.findAll(pageRequest).getContent();
 
         return page.stream()
                 .map(CompilationMapper::toCompilationResponseDto)
