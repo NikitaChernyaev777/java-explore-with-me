@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS events CASCADE;
 DROP TABLE IF EXISTS compilations CASCADE;
 DROP TABLE IF EXISTS compilation_events CASCADE;
 DROP TABLE IF EXISTS participation_requests CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -80,4 +81,17 @@ CREATE TABLE IF NOT EXISTS participation_requests
     CONSTRAINT pk_participation_requests PRIMARY KEY (id),
     CONSTRAINT fk_participation_requests_event_id FOREIGN KEY (event_id) REFERENCES events (id),
     CONSTRAINT fk_participation_requests_requester_id FOREIGN KEY (requester_id) REFERENCES users (id)
+);
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    id         BIGINT GENERATED ALWAYS AS IDENTITY,
+    text       VARCHAR(2000) NOT NULL,
+    event_id   BIGINT        NOT NULL,
+    author_id  BIGINT        NOT NULL,
+    created_on TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_on TIMESTAMP WITHOUT TIME ZONE,
+    CONSTRAINT pk_comments PRIMARY KEY (id),
+    CONSTRAINT fk_comments_event_id FOREIGN KEY (event_id) REFERENCES events (id),
+    CONSTRAINT fk_comments_author_id FOREIGN KEY (author_id) REFERENCES users (id)
 );

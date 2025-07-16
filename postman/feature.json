@@ -1,0 +1,766 @@
+{
+  "info": {
+    "_postman_id": "bf9b52be-0ebd-4cf8-a208-098479044e20",
+    "name": "feature",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40953666"
+  },
+  "item": [
+    {
+      "name": "Создание нового пользователя 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Статус 201 или 200\", function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"firstUserId\", json.id);",
+              "  console.log(\"id первого пользователя:\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"firstUserId\", null);",
+              "  console.error(\"id первого пользователя не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"user_1\",\"email\":\"user_1@hotmail.com\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Создание нового пользователя 2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Статус 201 или 200\", function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"secondUserId\", json.id);",
+              "  console.log(\"id второго пользователя:\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"secondUserId\", null);",
+              "  console.error(\"id второго пользователя не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"user_2\",\"email\":\"user_2@hotmail.com\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Создание новой категории",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Статус 201 или 200\", function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"categoryId\", json.id);",
+              "  console.log(\"id категории:\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"categoryId\", null);",
+              "  console.error(\"id категории не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"category_1\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/categories",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Создание нового события",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Статус 201 или 200\", function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"eventId\", json.id);",
+              "  console.log(\"id события\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"eventId\", null);",
+              "  console.error(\"id события не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"annotation\": \"Voluptas ex labore accusantium quod quasi sit provident.\",\n  \"category\": {{categoryId}},\n  \"description\": \"Eligendi corrupti incidunt dignissimos blanditiis rerum numquam beatae.\",\n  \"eventDate\": \"2025-10-01 18:57:00\",\n  \"location\": { \"lat\": -15.4197, \"lon\": 32.3827 },\n  \"paid\": true,\n  \"participantLimit\": 860,\n  \"requestModeration\": true,\n  \"title\": \"Minus consectetur et perspiciatis consequuntur nihil qui.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/{{firstUserId}}/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{firstUserId}}",
+            "events"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Публикация события 1 (текущий статус  \"PENDING\")",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Ожидаем 200 (статус события успешно изменен) или 409 (событие уже имеет статус PUBLISHED)",
+              "pm.test(\"Ожидаем 200 или 409\", () => {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 409]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"stateAction\":\"PUBLISH_EVENT\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Создание нового комментария пользователем 1 к событию 1 (текущий статус \"PUBLISHED\")",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Ожидаем 201 (комментарий успешно добавлен), 400 (данные тела запроса не прошли валидацию) или 404 (событие не найден)",
+              "pm.test(\"Ожидаем 201, 400 или 404\", () => {",
+              "  pm.expect(pm.response.code).to.be.oneOf([201, 400, 404]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"firstCommentId\", json.id);",
+              "  console.log(\"id первого комментария:\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"firstCommentId\", null);",
+              "  console.error(\"id первого комментария не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "packages": {},
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"This is a comment from user_1 that meets the minimum length requirement.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/{{firstUserId}}/events/{{eventId}}/comments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{firstUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Создание нового комментария пользователем 2 к событию 1 (текущий статус \"PUBLISHED\")",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Ожидаем 201 (комментарий успешно добавлен), 400 (данные тела запроса не прошли валидацию) или 404 (событие не найдено)",
+              "pm.test(\"Ожидаем 201, 400 или 404\", () => {",
+              "  pm.expect(pm.response.code).to.be.oneOf([201, 400, 404]);",
+              "});",
+              "let json = {}; try { json = pm.response.json(); } catch(e) {}",
+              "if (json && json.id) {",
+              "  pm.collectionVariables.set(\"secondCommentId\", json.id);",
+              "  console.log(\"id второго комментария:\", json.id);",
+              "} else {",
+              "  pm.collectionVariables.set(\"secondCommentId\", null);",
+              "  console.error(\"id второго комментария не был установлен, ответ:\", pm.response.text());",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"This is a comment from user_2 that meets the minimum length requirement.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/{{secondUserId}}/events/{{eventId}}/comments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{secondUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUBLIC: Получение всех комментариев к событию",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/events/1/comments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "1",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUBLIC: Получение комментария к событию",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/events/1/comments/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "events",
+            "1",
+            "comments",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Изменение комментария автором",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Ожидаем 200 (комментарий успешно обновлен), 400 (данные тела запроса не прошли валидацию), 404 (комментарий не найден), 409 (с момента создания комментария прошло более часа)",
+              "pm.test(\"Ожидаем 200, 400, 404 или 409\", () => {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 400, 404, 409]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"updated comment from user_1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/{{firstUserId}}/events/{{eventId}}/comments/{{firstCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{firstUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{firstCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Попытка изменения чужого комментария",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Тело содержит сообщение об ошибке\", () => {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.message).to.include(\"не принадлежит пользователю\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"An attempt to edit someone else's comment , which must contain at least thirty characters.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users/{{secondUserId}}/events/{{eventId}}/comments/{{firstCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{secondUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{firstCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Удаление комментария другим пользователем",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ожидаем код статуса 409\", function () {\r",
+              "    pm.response.to.have.status(409);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users/{{secondUserId}}/events/{{eventId}}/comments/{{firstCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{secondUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{firstCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PRIVATE: Удаление комментария автором",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.collectionVariables.get('firstCommentId')) {",
+              "  throw new Error('id первого комментария не установлено!');",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "console.log('Удаляем комментарий с id:', pm.collectionVariables.get('firstCommentId'));",
+              "pm.test(\"Ожидаем код статуса 204\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users/{{firstUserId}}/events/{{eventId}}/comments/{{firstCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "{{firstUserId}}",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{firstCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ADMIN: Изменение комментария администратором",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.collectionVariables.get('secondCommentId')) {",
+              "  throw new Error('id второго комментария не установлен.');",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ожидаем код статуса 200 и данные в формате json\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"The administrator is trying to change a comment that contains at least thirty characters!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/events/{{eventId}}/comments/{{secondCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{secondCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ADMIN: Удаление комментария администратором",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.collectionVariables.get('secondCommentId')) {",
+              "  throw new Error('id второго комментария не установлен.');",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ожидаем код статуса 204\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/admin/events/{{eventId}}/comments/{{secondCommentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "events",
+            "{{eventId}}",
+            "comments",
+            "{{secondCommentId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "firstUserId",
+      "value": "firstUser"
+    },
+    {
+      "key": "secondUserId",
+      "value": "secondUser"
+    },
+    {
+      "key": "categoryId",
+      "value": "category"
+    },
+    {
+      "key": "eventId",
+      "value": "event"
+    },
+    {
+      "key": "firstCommentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "secondCommentId",
+      "value": "secondComment"
+    }
+  ]
+}
