@@ -37,4 +37,4 @@ public class EventFullResponseDto {
     private final EventState state;
     private final String title;
     private final Long views;
-} 
+}
